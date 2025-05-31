@@ -1,0 +1,41 @@
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: api.dockerfile
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./:/api/
+    networks:
+      - api
+    env_file:
+      - .env
+#    depends_on:
+#      db:
+#        condition: service_healthy
+
+#  db:
+#    image: postgres:16.3
+#    container_name: db
+#    environment:
+#      POSTGRES_USER: ${DB_USER}
+#      POSTGRES_PORT: ${DB_PORT}
+#      POSTGRES_DB: ${DB_NAME}
+#      POSTGRES_PASSWORD: ${DB_PASS}
+#    volumes:
+#      - ./db:/var/lib/postgresql/data
+#    networks:
+#      - api
+#    ports:
+#      - ${DB_PORT}:${DB_PORT}
+#    healthcheck:
+#      test: ['CMD-SHELL', 'pg_isready -U ${DB_USER}']
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
+
+networks:
+  api:
+    driver: "bridge"
