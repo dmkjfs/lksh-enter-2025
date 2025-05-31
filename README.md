@@ -1,12 +1,12 @@
 <div align="center">
-    <a href="https://github.com/ilkztsff/lksh-enter-2025/blob/dev/LICENSE">
-      <img src="https://img.shields.io/github/license/ilkztsff/lksh-enter-2025?label=License&color=purple&style=for-the-badge">
+    <a href="https://github.com/dmkjfs/lksh-enter-2025/blob/dev/LICENSE">
+      <img src="https://img.shields.io/github/license/dmkjfs/lksh-enter-2025?label=License&color=purple&style=for-the-badge">
     </a>
     <a href="https://github.com/ilkztsff/lksh-enter-2025/blob/dev/pyproject.toml">
       <img src="https://img.shields.io/badge/python-3.12+-purple?style=for-the-badge">
     </a>
-    <a href="https://github.com/ilkztsff/lksh-enter-2025/actions/workflows/check.yml">
-      <img src="https://img.shields.io/github/actions/workflow/status/ilkztsff/lksh-enter-2025/check.yml?branch=dev&style=for-the-badge&label=linter&color=purple">
+    <a href="https://github.com/dmkjfs/lksh-enter-2025/actions/workflows/check.yml">
+      <img src="https://img.shields.io/github/actions/workflow/status/dmkjfs/lksh-enter-2025/check.yml?branch=main&style=for-the-badge&label=linter&color=purple">
     </a>
 </div>
 
