@@ -35,19 +35,16 @@ Create/recreate virtual environment with dependencies
 ```bash
 make venv
 ```
-<br>
 
 Lint + type check the project
 ```bash
 make lint
 ```
-<br>
 
 Build API image
 ```bash
 make build
 ```
-<br>
 
 Run API
 ```bash
