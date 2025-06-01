@@ -24,7 +24,8 @@ Test assignment for lksh-2025 P-parallel
 ## 🛠 Build commands
 
 Required to have `make`, `uv`, `docker` and `docker-compose` installed.
-All commands can be executed in bash. API documentation is available after
+All commands can be executed in bash. Don't forget to add required constants
+into `.env` file before start. API documentation is available after
 launch on http://127.0.0.1:8000/
 
 Quick run(API in docker + CLI locally) for those who don't wanna read :)
