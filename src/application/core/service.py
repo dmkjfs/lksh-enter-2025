@@ -2,11 +2,6 @@ from dataclasses import dataclass
 from types import TracebackType
 from typing import Callable, Self
 
-from src.domain.core.exceptions import TeamNotFoundError, PlayerNotFoundError
-from src.domain.core.service import Service
-from src.domain.interfaces.api.client import APIClient
-from src.domain.interfaces.api.dtos import BaseGoalDTO, BasePlayerDTO
-from src.infrastructure.config import settings
 from src.application.core.dtos import (
     PlayersResponseDTO,
     StatsResponseDTO,
@@ -18,6 +13,12 @@ from src.application.core.dtos import (
     GoalsRequestDTO,
 )
 from src.application.interfaces.api.client import get_api_client_implementation
+from src.domain.core.exceptions import TeamNotFoundError, PlayerNotFoundError
+from src.domain.core.service import Service
+from src.domain.interfaces.api.client import APIClient
+from src.domain.interfaces.api.dtos import BaseGoalDTO, BasePlayerDTO
+from src.infrastructure.config import settings
+from src.infrastructure.loggers import application as logger
 
 
 @dataclass
@@ -25,6 +26,7 @@ class ServiceImplementation(Service):
     api_client_factory: Callable[[], APIClient]
 
     async def get_players(self) -> PlayersResponseDTO:
+        logger.info("get_players service request")
         player_ids = set()
         players_names = list()
 
@@ -42,6 +44,7 @@ class ServiceImplementation(Service):
         return PlayersResponseDTO(players=players_names)
 
     async def get_team_stats(self, team_name: str) -> StatsResponseDTO:
+        logger.info("get_team_stats service request")
         request = StatsRequestDTO(team_name=team_name)
         async with self.api_client_factory() as client:
             teams = await client.get_teams()
@@ -80,6 +83,7 @@ class ServiceImplementation(Service):
         )
 
     async def get_versus_matches(self, player1_id: int, player2_id: int) -> VersusResponseDTO:
+        logger.info("get_versus_matches service request")
         request = VersusRequestDTO(player1_id=player1_id, player2_id=player2_id)
         async with self.api_client_factory() as client:
             player1 = await client.get_player(request.player1_id)
@@ -104,6 +108,7 @@ class ServiceImplementation(Service):
         return VersusResponseDTO(amount=versus_count)
 
     async def get_goals(self, player_id: int) -> GoalsResponseDTO:
+        logger.info("get_goals service request")
         request = GoalsRequestDTO(player_id=player_id)
         async with self.api_client_factory() as client:
             response = await client.get_matches()
@@ -127,6 +132,7 @@ class ServiceImplementation(Service):
             return GoalsResponseDTO(goals=player_goals)
 
     async def login(self) -> None:
+        logger.info("login service request")
         async with self.api_client_factory() as client:
             await client.login(reason=settings.reason)
 

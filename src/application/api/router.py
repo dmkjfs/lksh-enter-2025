@@ -2,11 +2,12 @@ from typing import AsyncGenerator
 
 from fastapi import FastAPI, APIRouter, Depends, HTTPException, status
 
-from src.domain.api.router import Router
 from src.application.core.service import get_service_implementation
+from src.domain.api.router import Router
 from src.domain.core.exceptions import TeamNotFoundError, PlayerNotFoundError
 from src.domain.core.service import Service
 from src.infrastructure.api import ExceptionHandler
+from src.infrastructure.loggers import application as logger
 from src.presentation.schema import (
     SGoal,
     SGoalsResponse,
@@ -37,6 +38,7 @@ class RouterImplementation(Router):
         request: STeamStatsRequest = Depends(STeamStatsRequest),
         service: Service = Depends(get_service_implementation),
     ) -> STeamStatsResponse:
+        logger.info("get_team_stats API request")
         async with ExceptionHandler(exceptions={
             TeamNotFoundError: HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Team is not found"),
         }):
@@ -73,6 +75,7 @@ class RouterImplementation(Router):
         request: SVersusRequest = Depends(SVersusRequest),
         service: Service = Depends(get_service_implementation),
     ) -> SVersusResponse:
+        logger.info("get_player_versus API request")
         async with ExceptionHandler(exceptions={
             PlayerNotFoundError: HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="One or both players are not found"),
             TeamNotFoundError: HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Player's team is not found"),
@@ -90,6 +93,7 @@ class RouterImplementation(Router):
         request: SGoalsRequest = Depends(SGoalsRequest),
         service: Service = Depends(get_service_implementation),
     ) -> SGoalsResponse:
+        logger.info("get_goals API request")
         response = await service.get_goals(player_id=request.player_id)
         return list(map(
             lambda goal: SGoal(

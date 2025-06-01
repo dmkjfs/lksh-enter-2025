@@ -2,9 +2,9 @@ import asyncio
 from dataclasses import dataclass
 from typing import Callable
 
+from src.application.core.service import get_service_implementation
 from src.domain.cli.main import CLInterface
 from src.domain.core.service import Service
-from src.application.core.service import get_service_implementation
 from src.infrastructure.cli import ExceptionHandler
 
 

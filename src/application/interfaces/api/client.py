@@ -14,6 +14,7 @@ from src.application.interfaces.api.dtos import (
     GoalDTO,
 )
 from src.infrastructure.config import settings
+from src.infrastructure.loggers import application as logger
 
 
 class APIClientImplementation(APIClient, aiohttp.ClientSession):
@@ -21,6 +22,7 @@ class APIClientImplementation(APIClient, aiohttp.ClientSession):
         super().__init__(base_url=settings.api_base_url)
 
     async def get_matches(self) -> MatchesDTO:  # type: ignore[override]
+        logger.info("get_matches APIClient request")
         response = await self.get(
             url="/matches",
             headers={"Authorization": settings.api_token},
@@ -32,6 +34,7 @@ class APIClientImplementation(APIClient, aiohttp.ClientSession):
         ))
 
     async def get_teams(self) -> TeamsDTO:  # type: ignore[override]
+        logger.info("get_teams APIClient request")
         response = await self.get(
             url="/teams",
             headers={"Authorization": settings.api_token},
@@ -43,6 +46,7 @@ class APIClientImplementation(APIClient, aiohttp.ClientSession):
         ))
 
     async def get_team(self, team_id: int) -> TeamDTO | None:
+        logger.info("get_team APIClient request")
         response = await self.get(
             url=f"/teams/{team_id}",
             headers={"Authorization": settings.api_token},
@@ -55,6 +59,7 @@ class APIClientImplementation(APIClient, aiohttp.ClientSession):
         return TeamDTO(**await response.json())
 
     async def get_player(self, player_id: int) -> PlayerDTO | None:
+        logger.info("get_player APIClient request")
         response = await self.get(
             url=f"/players/{player_id}",
             headers={"Authorization": settings.api_token},
@@ -67,6 +72,7 @@ class APIClientImplementation(APIClient, aiohttp.ClientSession):
         return PlayerDTO(**await response.json())
 
     async def login(self, reason: str) -> None:
+        logger.info("login APIClient request")
         await self.post(
             url="/login",
             data={"reason": reason},
@@ -74,6 +80,7 @@ class APIClientImplementation(APIClient, aiohttp.ClientSession):
         )
 
     async def get_match_goals(self, match_id: int) -> GoalsDTO:  # type: ignore[override]
+        logger.info("get_match_goals APIClient request")
         response = await self.get(
             url="/goals",
             params={"match_id": match_id},
