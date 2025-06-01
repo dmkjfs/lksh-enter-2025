@@ -42,7 +42,7 @@ Lint + type check the project
 make lint
 ```
 
-Build API image
+Build API container 
 ```bash
 make build
 ```
